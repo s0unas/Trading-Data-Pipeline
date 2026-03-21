@@ -18,6 +18,17 @@ data['Ticker'] = symbol
 # 4. Load
 conn = sqlite3.connect(db_name)
 # 'append' ensures we keep history; 'index=False' because we made Date a column
+
+# --- Validation Check ---
+if data.empty:
+    print("Warning: No data found for this period. Skipping database update.")
+elif data['Close'].isnull().values.any():
+    print("Warning: Data contains Null values. Skipping database update.")
+else:
+    # ONLY load to SQL if the data is clean
+    data.to_sql('prices', conn, if_exists="append", index=False)
+    print(f"Success! Clean data for {symbol} saved.")
+
 data.to_sql('prices', conn, if_exists="append", index=False)
 conn.close()
 

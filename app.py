@@ -9,6 +9,7 @@ db_name = "trading_data.db"
 # 2. Extract
 data = yf.download(symbol, period="5d")
 
+data.columns = data.columns.get_level_values(0)
 # 3. Transform
 # Move the Date from the index to a regular column
 data = data.reset_index()

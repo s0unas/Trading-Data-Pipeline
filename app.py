@@ -28,8 +28,4 @@ else:
     # ONLY load to SQL if the data is clean
     data.to_sql('prices', conn, if_exists="append", index=False)
     print(f"Success! Clean data for {symbol} saved.")
-
-data.to_sql('prices', conn, if_exists="append", index=False)
 conn.close()
-
-print(f"Success! {symbol} data added to {db_name}")

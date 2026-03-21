@@ -24,11 +24,18 @@ jobs:
 
       - name: Run trading script
         run: python app.py
-
+      
+      - name: Run pipeline
+        run: |
+          mkdir -p charts
+          python app.py
+          python plot_data.py
+        
       - name: Commit and Push changes
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add trading_data.db
-          git commit -m "Automated data update" || exit 0
+          git add .
+          
+          git commit -m "Automated data and chart update" || exit 0
           git push
